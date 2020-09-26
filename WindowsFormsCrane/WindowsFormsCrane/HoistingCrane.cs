@@ -42,7 +42,6 @@ namespace WindowsFormsCrane
         // <param name="mainColor">Основной цвет</param>
         // <param name="dopColor">Дополнительный цвет</param>
 
-        // <param name="cabin">Признак наличия кабины</param>
         // <param name="arrow">Признак наличия стрелы</param>
         // <param name="counterweight">Признак наличия противовеса(м)</param>
         public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight)
