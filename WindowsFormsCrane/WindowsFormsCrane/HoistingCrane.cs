@@ -41,7 +41,6 @@ namespace WindowsFormsCrane
         // <param name="weight">Общая масса агрегата(т)</param>
         // <param name="mainColor">Основной цвет</param>
         // <param name="dopColor">Дополнительный цвет</param>
-
         // <param name="arrow">Признак наличия стрелы</param>
         // <param name="counterweight">Признак наличия противовеса(м)</param>
         public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight)
@@ -70,19 +69,19 @@ namespace WindowsFormsCrane
                     if (Arrow && Counterweight)
                         _startPosX = x + _counterweightWidth;
                     else
-                        _startPosX = x;                     
+                        _startPosX = x;
                     _startPosY = y + _arrowHeight;
                 }
                 else
                 {
                     _startPosX = x + _counterweightWidth;
                     _startPosY = y + _counterweightHeight;
-                }              
+                }
             }
-            else 
+            else
             {
-                    _startPosX = x;
-                    _startPosY = y;               
+                _startPosX = x;
+                _startPosY = y;
             }
         }
 
@@ -124,7 +123,7 @@ namespace WindowsFormsCrane
                     }
                     else
                         if (_startPosY - step > _cabinHeight)
-                        _startPosY -= step;
+                            _startPosY -= step;
                     break;
                 //вниз
                 case Direction.Down:
@@ -167,7 +166,7 @@ namespace WindowsFormsCrane
             g.DrawRectangle(pen, _startPosX + 20, _startPosY - 20, 50, 70);
             g.FillRectangle(new SolidBrush(Color.LightBlue), _startPosX + 30, _startPosY - 10, 30, 40);
             g.DrawRectangle(pen, _startPosX + 30, _startPosY - 10, 30, 40);
-                    
+
             if (Counterweight)
             {
                 g.FillRectangle(brD, _startPosX + 200, _startPosY - 10, 30, 60);
