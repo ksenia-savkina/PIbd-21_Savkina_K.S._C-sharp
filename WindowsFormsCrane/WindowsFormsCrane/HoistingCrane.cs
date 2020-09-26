@@ -67,9 +67,13 @@ namespace WindowsFormsCrane
                 if (Arrow || Arrow && Counterweight)
                 {
                     if (Arrow && Counterweight)
+                    {
                         _startPosX = x + _counterweightWidth;
+                    }
                     else
+                    {
                         _startPosX = x;
+                    }
                     _startPosY = y + _arrowHeight;
                 }
                 else
@@ -96,15 +100,24 @@ namespace WindowsFormsCrane
                     if (Counterweight)
                     {
                         if (_startPosX + step < _pictureWidth - (trackedVehicleWidth + _counterweightWidth))
+                        {
                             _startPosX += step;
+                        }
                     }
-                    else if (_startPosX + step < _pictureWidth - trackedVehicleWidth)
-                        _startPosX += step;
+                    else
+                    {
+                        if (_startPosX + step < _pictureWidth - trackedVehicleWidth)
+                        {
+                            _startPosX += step;
+                        }
+                    }
                     break;
                 //влево
                 case Direction.Left:
                     if (_startPosX - step > 0)
+                    {
                         _startPosX -= step;
+                    }
                     break;
                 //вверх
                 case Direction.Up:
@@ -113,22 +126,32 @@ namespace WindowsFormsCrane
                         if (Arrow || Arrow && Counterweight)
                         {
                             if (_startPosY - step > _arrowHeight)
+                            {
                                 _startPosY -= step;
+                            }
                         }
                         else if (Counterweight)
                         {
                             if (_startPosY - step > _counterweightHeight)
+                            {
                                 _startPosY -= step;
+                            }
                         }
                     }
                     else
+                    {
                         if (_startPosY - step > _cabinHeight)
+                        {
                             _startPosY -= step;
+                        }
+                    }
                     break;
                 //вниз
                 case Direction.Down:
                     if (_startPosY + step < _pictureHeight - trackedVehicleHeight)
+                    {
                         _startPosY += step;
+                    }
                     break;
             }
         }
@@ -176,6 +199,7 @@ namespace WindowsFormsCrane
                 g.DrawLine(pen, _startPosX + 200, _startPosY - 10, _startPosX + 200, _startPosY - 60);
                 g.DrawLine(pen, _startPosX + 120, _startPosY, _startPosX + 200, _startPosY - 60);
             }
+
             if (Arrow)
             {
                 g.DrawLine(pen, _startPosX + 30, _startPosY - 230, _startPosX + 200, _startPosY - 60);
