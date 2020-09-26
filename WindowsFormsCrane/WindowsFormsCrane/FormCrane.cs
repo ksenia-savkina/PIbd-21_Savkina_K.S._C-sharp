@@ -7,6 +7,7 @@ namespace WindowsFormsCrane
     public partial class FormCrane : Form
     {
         private HoistingCrane crane;
+
         public FormCrane()
         {
             InitializeComponent();
@@ -24,8 +25,8 @@ namespace WindowsFormsCrane
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             Random rnd = new Random();
-            crane = new HoistingCrane(rnd.Next(1, 3), rnd.Next(25, 50), Color.Blue, Color.Gray, true, true, true);
-            crane.SetPosition(rnd.Next(10, 100), rnd.Next(10, 100), pictureBoxCrane.Width, pictureBoxCrane.Height);
+            crane = new HoistingCrane(rnd.Next(1, 3), rnd.Next(25, 50), Color.Blue, Color.Gray, true, true);
+            crane.SetPosition(rnd.Next(0, 100), rnd.Next(20, 100), pictureBoxCrane.Width, pictureBoxCrane.Height);
             Draw();
         }
 
