@@ -36,13 +36,13 @@ namespace WindowsFormsCrane
         // Признак наличия противовеса
         public bool Counterweight { private set; get; }
 
-        // Конструктор
-        // <param name="maxSpeed">Максимальная скорость(м/мин)</param>
-        // <param name="weight">Общая масса агрегата(т)</param>
-        // <param name="mainColor">Основной цвет</param>
-        // <param name="dopColor">Дополнительный цвет</param>
-        // <param name="arrow">Признак наличия стрелы</param>
-        // <param name="counterweight">Признак наличия противовеса(м)</param>
+        /// Конструктор
+        /// <param name="maxSpeed">Максимальная скорость(м/мин)</param>
+        /// <param name="weight">Общая масса агрегата(т)</param>
+        /// <param name="mainColor">Основной цвет</param>
+        /// <param name="dopColor">Дополнительный цвет</param>
+        /// <param name="arrow">Признак наличия стрелы</param>
+        /// <param name="counterweight">Признак наличия противовеса(м)</param>
         public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight)
         {
             MaxSpeed = maxSpeed;
@@ -54,31 +54,23 @@ namespace WindowsFormsCrane
         }
 
         // Установка позиции подъемного крана
-        // <param name="x">Координата X</param>
-        // <param name="y">Координата Y</param>
-        // <param name="width">Ширина картинки</param>
-        // <param name="height">Высота картинки</param>
+        /// <param name="x">Координата X</param>
+        /// <param name="y">Координата Y</param>
+        /// <param name="width">Ширина картинки</param>
+        /// <param name="height">Высота картинки</param>
         public void SetPosition(int x, int y, int width, int height)
         {
             _pictureHeight = height;
             _pictureWidth = width;
             if (Arrow || Counterweight)
             {
+                _startPosX = x;
                 if (Arrow || Arrow && Counterweight)
                 {
-                    if (Arrow && Counterweight)
-                    {
-                        _startPosX = x + _counterweightWidth;
-                    }
-                    else
-                    {
-                        _startPosX = x;
-                    }
                     _startPosY = y + _arrowHeight;
                 }
                 else
                 {
-                    _startPosX = x + _counterweightWidth;
                     _startPosY = y + _counterweightHeight;
                 }
             }
