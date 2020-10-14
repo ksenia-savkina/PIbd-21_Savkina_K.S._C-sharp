@@ -1,96 +1,39 @@
 ﻿using System.Drawing;
 namespace WindowsFormsCrane
 {
-    public class HoistingCrane
+    public class HoistingCrane : TrackedVehicle
     {
-        // Левая координата отрисовки гусеничной машины
-        private float _startPosX;
-        // Правая кооридната отрисовки гусеничной машины
-        private float _startPosY;
-        // Ширина окна отрисовки
-        private int _pictureWidth;
-        // Высота окна отрисовки
-        private int _pictureHeight;
-        // Ширина отрисовки гусеничной машины
-        private readonly int trackedVehicleWidth = 200;
-        // Высота отрисовки гусеничной машины
-        private readonly int trackedVehicleHeight = 110;
         // Высота отрисовки стрелы
         private readonly int _arrowHeight = 230;
         // Высота отрисовки противовеса
         private readonly int _counterweightHeight = 70;
         // Ширина отрисовки противовеса
         private readonly int _counterweightWidth = 30;
-        // Высота отрисовки кабины
-        private readonly int _cabinHeight = 20;
-        // Основной цвет
-        public Color MainColor { private set; get; }
         // Дополнительный цвет
         public Color DopColor { private set; get; }
-        // Максимальная скорость гусеничной машины
-        public int MaxSpeed { private set; get; }
-        // Общая масса агрегата
-        public float Weight { private set; get; }
         // Признак наличия стрелы
         public bool Arrow { private set; get; }
         // Признак наличия противовеса
         public bool Counterweight { private set; get; }
 
         // Конструктор
-        // <param name="maxSpeed">Максимальная скорость(м/мин)</param>
-        // <param name="weight">Общая масса агрегата(т)</param>
-        // <param name="mainColor">Основной цвет</param>
-        // <param name="dopColor">Дополнительный цвет</param>
-        // <param name="arrow">Признак наличия стрелы</param>
-        // <param name="counterweight">Признак наличия противовеса(м)</param>
-        public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight)
+        /// <param name="maxSpeed">Максимальная скорость(м/мин)</param>
+        /// <param name="weight">Общая масса агрегата(т)</param>
+        /// <param name="mainColor">Основной цвет</param>
+        /// <param name="dopColor">Дополнительный цвет</param>
+        /// <param name="arrow">Признак наличия стрелы</param>
+        /// <param name="counterweight">Признак наличия противовеса(м)</param>
+        public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight):
+            base(maxSpeed, weight, mainColor, 200, 110)
         {
-            MaxSpeed = maxSpeed;
-            Weight = weight;
-            MainColor = mainColor;
             DopColor = dopColor;
             Arrow = arrow;
             Counterweight = counterweight;
         }
 
-        // Установка позиции подъемного крана
-        // <param name="x">Координата X</param>
-        // <param name="y">Координата Y</param>
-        // <param name="width">Ширина картинки</param>
-        // <param name="height">Высота картинки</param>
-        public void SetPosition(int x, int y, int width, int height)
-        {
-            _pictureHeight = height;
-            _pictureWidth = width;
-            if (Arrow || Counterweight)
-            {
-                if (Arrow || Arrow && Counterweight)
-                {
-                    if (Arrow && Counterweight)
-                    {
-                        _startPosX = x + _counterweightWidth;
-                    }
-                    else
-                    {
-                        _startPosX = x;
-                    }
-                    _startPosY = y + _arrowHeight;
-                }
-                else
-                {
-                    _startPosX = x + _counterweightWidth;
-                    _startPosY = y + _counterweightHeight;
-                }
-            }
-            else
-            {
-                _startPosX = x;
-                _startPosY = y;
-            }
-        }
 
         // Изменение направления пермещения
-        public void MoveCrane(Direction direction)
+        public override void MoveCrane(Direction direction)
         {
             float step = MaxSpeed * 100 / Weight;
             switch (direction)
@@ -98,7 +41,7 @@ namespace WindowsFormsCrane
                 // вправо
                 case Direction.Right:
                     if (Counterweight)
-                    {
+                    {                   
                         if (_startPosX + step < _pictureWidth - (trackedVehicleWidth + _counterweightWidth))
                         {
                             _startPosX += step;
@@ -106,18 +49,12 @@ namespace WindowsFormsCrane
                     }
                     else
                     {
-                        if (_startPosX + step < _pictureWidth - trackedVehicleWidth)
-                        {
-                            _startPosX += step;
-                        }
+                        base.MoveCrane(Direction.Right);
                     }
                     break;
                 //влево
                 case Direction.Left:
-                    if (_startPosX - step > 0)
-                    {
-                        _startPosX -= step;
-                    }
+                    base.MoveCrane(Direction.Left);
                     break;
                 //вверх
                 case Direction.Up:
@@ -140,55 +77,21 @@ namespace WindowsFormsCrane
                     }
                     else
                     {
-                        if (_startPosY - step > _cabinHeight)
-                        {
-                            _startPosY -= step;
-                        }
+                        base.MoveCrane(Direction.Up);
                     }
                     break;
                 //вниз
                 case Direction.Down:
-                    if (_startPosY + step < _pictureHeight - trackedVehicleHeight)
-                    {
-                        _startPosY += step;
-                    }
+                    base.MoveCrane(Direction.Down);
                     break;
             }
         }
         // Отрисовка 
-        public void DrawCrane(Graphics g)
+        public override void DrawCrane(Graphics g)
         {
-            Pen pen = new Pen(Color.Black);
-            // гусеничная машина
-            Brush brM = new SolidBrush(MainColor);
-            g.FillRectangle(brM, _startPosX + 70, _startPosY, 130, 50);
-            g.DrawRectangle(pen, _startPosX + 70, _startPosY, 130, 50);
+            base.DrawCrane(g);
+            Pen pen = new Pen(Color.Black);       
             Brush brD = new SolidBrush(DopColor);
-            g.FillRectangle(brD, _startPosX + 70, _startPosY + 50, 50, 10);
-            g.DrawRectangle(pen, _startPosX + 70, _startPosY + 50, 50, 10);
-
-            Point[] points = new Point[6]
-            {
-                new Point((int)(_startPosX), (int)(_startPosY + 70)),
-                new Point((int)(_startPosX), (int)(_startPosY + 110)),
-                new Point((int)(_startPosX + 190), (int)(_startPosY + 110)),
-                new Point((int)(_startPosX + 190), (int)(_startPosY + 70)),
-                new Point((int)(_startPosX + 170), (int)(_startPosY + 60)),
-                new Point((int)(_startPosX + 20), (int)(_startPosY + 60)),
-            };
-            g.FillPolygon(brD, points);
-            g.DrawPolygon(pen, points);
-
-            Brush br1 = new SolidBrush(Color.Black);
-            g.FillEllipse(br1, _startPosX, _startPosY + 70, 38, 38);
-            g.FillEllipse(br1, _startPosX + 38, _startPosY + 70, 38, 38);
-            g.FillEllipse(br1, _startPosX + 38 * 2, _startPosY + 70, 38, 38);
-            g.FillEllipse(br1, _startPosX + 38 * 3, _startPosY + 70, 38, 38);
-            g.FillEllipse(br1, _startPosX + 38 * 4, _startPosY + 70, 38, 38);
-            g.FillRectangle(brM, _startPosX + 20, _startPosY - 20, 50, 70);
-            g.DrawRectangle(pen, _startPosX + 20, _startPosY - 20, 50, 70);
-            g.FillRectangle(new SolidBrush(Color.LightBlue), _startPosX + 30, _startPosY - 10, 30, 40);
-            g.DrawRectangle(pen, _startPosX + 30, _startPosY - 10, 30, 40);
 
             if (Counterweight)
             {

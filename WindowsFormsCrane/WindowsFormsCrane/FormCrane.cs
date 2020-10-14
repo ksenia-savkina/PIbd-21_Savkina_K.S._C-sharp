@@ -6,7 +6,7 @@ namespace WindowsFormsCrane
 {
     public partial class FormCrane : Form
     {
-        private HoistingCrane crane;
+        private ICrane crane;
 
         public FormCrane()
         {
@@ -22,11 +22,21 @@ namespace WindowsFormsCrane
             pictureBoxCrane.Image = bmp;
         }
 
-        private void buttonCreate_Click(object sender, EventArgs e)
+        // Обработка нажатия кнопки "Создать гусеничную машину"
+        private void buttonCreateTrackedVehicle_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            crane = new TrackedVehicle(rnd.Next(1, 3), rnd.Next(25, 50), Color.Blue);
+            crane.SetPosition(rnd.Next(0, 100), rnd.Next(20, 100), pictureBoxCrane.Width, pictureBoxCrane.Height);
+            Draw();
+        }
+
+        // Обработка нажатия кнопки "Создать подъемный кран"
+        private void buttonCreateHoistingCrane_Click(object sender, EventArgs e)
         {
             Random rnd = new Random();
             crane = new HoistingCrane(rnd.Next(1, 3), rnd.Next(25, 50), Color.Blue, Color.Gray, true, true);
-            crane.SetPosition(rnd.Next(0, 100), rnd.Next(20, 100), pictureBoxCrane.Width, pictureBoxCrane.Height);
+            crane.SetPosition(rnd.Next(0, 100), rnd.Next(230, 325), pictureBoxCrane.Width, pictureBoxCrane.Height);
             Draw();
         }
 
