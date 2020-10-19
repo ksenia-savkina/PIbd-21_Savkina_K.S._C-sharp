@@ -23,6 +23,7 @@ namespace WindowsFormsCrane
         /// <param name="dopColor">Дополнительный цвет</param>
         /// <param name="arrow">Признак наличия стрелы</param>
         /// <param name="counterweight">Признак наличия противовеса(м)</param>
+        
         public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight):
             base(maxSpeed, weight, mainColor, 200, 110)
         {
@@ -30,7 +31,6 @@ namespace WindowsFormsCrane
             Arrow = arrow;
             Counterweight = counterweight;
         }
-
 
         // Изменение направления пермещения
         public override void MoveCrane(Direction direction)
