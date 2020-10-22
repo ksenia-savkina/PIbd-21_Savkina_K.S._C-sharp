@@ -12,13 +12,19 @@ namespace WindowsFormsCrane
         {
             InitializeComponent();
         }
+        /// Передача крана на форму
+        public void SetCrane(ICrane crane)
+        {
+            this.crane = crane;
+            Draw();
+        }
 
         // Метод отрисовки крана
         private void Draw()
         {
             Bitmap bmp = new Bitmap(pictureBoxCrane.Width, pictureBoxCrane.Height);
             Graphics gr = Graphics.FromImage(bmp);
-            crane.DrawCrane(gr);
+            crane?.DrawCrane(gr);
             pictureBoxCrane.Image = bmp;
         }
 
@@ -46,16 +52,16 @@ namespace WindowsFormsCrane
             switch (name)
             {
                 case "buttonUp":
-                    crane.MoveCrane(Direction.Up);
+                    crane?.MoveCrane(Direction.Up);
                     break;
                 case "buttonDown":
-                    crane.MoveCrane(Direction.Down);
+                    crane?.MoveCrane(Direction.Down);
                     break;
                 case "buttonLeft":
-                    crane.MoveCrane(Direction.Left);
+                    crane?.MoveCrane(Direction.Left);
                     break;
                 case "buttonRight":
-                    crane.MoveCrane(Direction.Right);
+                    crane?.MoveCrane(Direction.Right);
                     break;
             }
             Draw();

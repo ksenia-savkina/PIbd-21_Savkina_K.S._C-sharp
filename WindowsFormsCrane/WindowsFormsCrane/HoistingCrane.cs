@@ -31,7 +31,6 @@ namespace WindowsFormsCrane
             Counterweight = counterweight;
         }
 
-
         // Изменение направления пермещения
         public override void MoveCrane(Direction direction)
         {

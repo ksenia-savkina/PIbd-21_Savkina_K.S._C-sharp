@@ -43,7 +43,7 @@
             this.pictureBoxCrane.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBoxCrane.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxCrane.Name = "pictureBoxCrane";
-            this.pictureBoxCrane.Size = new System.Drawing.Size(884, 461);
+            this.pictureBoxCrane.Size = new System.Drawing.Size(884, 749);
             this.pictureBoxCrane.TabIndex = 0;
             this.pictureBoxCrane.TabStop = false;
             // 
@@ -52,7 +52,7 @@
             this.buttonRight.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonRight.BackgroundImage = global::WindowsFormsCrane.Properties.Resources.right;
             this.buttonRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonRight.Location = new System.Drawing.Point(845, 419);
+            this.buttonRight.Location = new System.Drawing.Point(845, 707);
             this.buttonRight.Name = "buttonRight";
             this.buttonRight.Size = new System.Drawing.Size(30, 30);
             this.buttonRight.TabIndex = 2;
@@ -64,7 +64,7 @@
             this.buttonLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonLeft.BackgroundImage = global::WindowsFormsCrane.Properties.Resources.left;
             this.buttonLeft.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonLeft.Location = new System.Drawing.Point(773, 419);
+            this.buttonLeft.Location = new System.Drawing.Point(773, 707);
             this.buttonLeft.Name = "buttonLeft";
             this.buttonLeft.Size = new System.Drawing.Size(30, 30);
             this.buttonLeft.TabIndex = 3;
@@ -76,7 +76,7 @@
             this.buttonUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonUp.BackgroundImage = global::WindowsFormsCrane.Properties.Resources.up;
             this.buttonUp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonUp.Location = new System.Drawing.Point(809, 382);
+            this.buttonUp.Location = new System.Drawing.Point(809, 670);
             this.buttonUp.Name = "buttonUp";
             this.buttonUp.Size = new System.Drawing.Size(30, 30);
             this.buttonUp.TabIndex = 4;
@@ -88,7 +88,7 @@
             this.buttonDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonDown.BackgroundImage = global::WindowsFormsCrane.Properties.Resources.down;
             this.buttonDown.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.buttonDown.Location = new System.Drawing.Point(809, 419);
+            this.buttonDown.Location = new System.Drawing.Point(809, 707);
             this.buttonDown.Name = "buttonDown";
             this.buttonDown.Size = new System.Drawing.Size(30, 30);
             this.buttonDown.TabIndex = 5;
@@ -119,7 +119,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 461);
+            this.ClientSize = new System.Drawing.Size(884, 749);
             this.Controls.Add(this.buttonCreateTrackedVehicle);
             this.Controls.Add(this.buttonCreateHoistingCrane);
             this.Controls.Add(this.buttonDown);

@@ -15,8 +15,8 @@ namespace WindowsFormsCrane
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
-
         }
+
         protected TrackedVehicle(int maxSpeed, float weight, Color mainColor, int trackedVehicleWidth, int trackedVehicleHeight)
         {
             MaxSpeed = maxSpeed;
