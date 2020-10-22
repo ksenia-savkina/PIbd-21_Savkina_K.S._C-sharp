@@ -12,7 +12,7 @@ namespace WindowsFormsCrane
         {
             InitializeComponent();
         }
-        /// Передача крана на форму
+        // Передача крана на форму
         public void SetCrane(ICrane crane)
         {
             this.crane = crane;
