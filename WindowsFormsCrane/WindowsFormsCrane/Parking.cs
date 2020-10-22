@@ -5,7 +5,7 @@ namespace WindowsFormsCrane
 {
     // Параметризованный класс для хранения набора объектов от интерфейса ICrane
     /// <typeparam name="T"></typeparam>
-    class Parking<T> where T : class, ICrane
+    public class Parking<T> where T : class, ICrane
     {
         // Массив объектов, которые храним
         private readonly T[] _places;
