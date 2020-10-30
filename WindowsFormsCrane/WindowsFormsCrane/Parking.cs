@@ -1,14 +1,17 @@
 ﻿
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace WindowsFormsCrane
 {
     // Параметризованный класс для хранения набора объектов от интерфейса ICrane
     /// <typeparam name="T"></typeparam>
-    class Parking<T> where T : class, ICrane
+    public class Parking<T> where T : class, ICrane
     {
-        // Массив объектов, которые храним
-        private readonly T[] _places;
+        // Список объектов, которые храним
+        private readonly List<T> _places;
+        // Максимальное количество мест на стоянке
+        private readonly int _maxCount;
         // Ширина окна отрисовки
         private readonly int pictureWidth;
         // Высота окна отрисовки
@@ -25,30 +28,23 @@ namespace WindowsFormsCrane
         {
             int width = picWidth / _placeSizeWidth;
             int height = picHeight / _placeSizeHeight;
-            _places = new T[width * height];
+            _maxCount = width * height;
             pictureWidth = picWidth;
             pictureHeight = picHeight;
+            _places = new List<T>();
         }
         // Перегрузка оператора сложения
         // Логика действия: на стоянку добавляется кран
         /// <param name="p">Стоянка</param>
         /// <param name="crane">Добавляемый кран</param>
         public static bool operator +(Parking<T> p, T crane)
-        {
-            int interval = 35;
-            int x = 5;
-            int y = 235;
-            int placesWidth = p.pictureWidth / p._placeSizeWidth;
-            for (int i = 0; i < p._places.Length; i++)
+        {      
+            if (p._places.Count >= p._maxCount)
             {
-                if (p._places[i] == null)
-                {
-                    p._places[i] = crane;
-                    crane.SetPosition(x + (p._placeSizeWidth + interval) * (i % placesWidth), y + p._placeSizeHeight * (i / placesWidth), p.pictureWidth, p.pictureHeight);
-                    return true;
-                }
+                return false;
             }
-            return false;
+            p._places.Add(crane);
+            return true;
         }
 
         // Перегрузка оператора вычитания
@@ -57,23 +53,28 @@ namespace WindowsFormsCrane
         /// <param name="index">Индекс места, с которого пытаемся извлечь объект</param>
         public static T operator -(Parking<T> p, int index)
         {
-            if (index >= 0 && index < p._places.Length && p._places[index] != null )
+            if (index < -1 || index > p._places.Count)
             {
-                T temp = p._places[index];
-                p._places[index] = null;
-                return temp;
+                return null;
             }
-            return null;
+            T crane = p._places[index];
+            p._places.RemoveAt(index);
+            return crane;
         }
 
         // Метод отрисовки стоянки
         /// <param name="g"></param>
         public void Draw(Graphics g)
         {
+            int interval = 35;
+            int x = 5;
+            int y = 235;
+            int placesWidth = pictureWidth / _placeSizeWidth;
             DrawMarking(g);
-            for (int i = 0; i < _places.Length; i++)
+            for (int i = 0; i < _places.Count; ++i)
             {
-                _places[i]?.DrawCrane(g);
+                _places[i].SetPosition(x + (_placeSizeWidth + interval) * (i % placesWidth), y + _placeSizeHeight * (i / placesWidth), pictureWidth, pictureHeight); ;
+                _places[i].DrawCrane(g);
             }
         }
 
@@ -88,7 +89,7 @@ namespace WindowsFormsCrane
             {
                 for (int j = 0; j < pictureHeight / _placeSizeHeight + 1; ++j)
                 {//линия рамзетки места
-                    g.DrawLine(pen, x + (_placeSizeWidth + interval) * i  , j * _placeSizeHeight, x + _placeSizeWidth + (_placeSizeWidth + interval) * i, j * _placeSizeHeight);
+                    g.DrawLine(pen, x + (_placeSizeWidth + interval) * i, j * _placeSizeHeight, x + _placeSizeWidth + (_placeSizeWidth + interval) * i, j * _placeSizeHeight);
                 }
                 g.DrawLine(pen, i * (_placeSizeWidth + interval), 0, i * (_placeSizeWidth + interval), (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
             }
