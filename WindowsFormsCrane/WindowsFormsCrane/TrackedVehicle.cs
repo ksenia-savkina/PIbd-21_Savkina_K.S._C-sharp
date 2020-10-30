@@ -69,12 +69,12 @@ namespace WindowsFormsCrane
             Brush brM = new SolidBrush(MainColor);
             g.FillRectangle(brM, _startPosX + 70, _startPosY, 130, 50);
             g.DrawRectangle(pen, _startPosX + 70, _startPosY, 130, 50);
-            
+
             Brush br1 = new SolidBrush(Color.Black);
             Brush br2 = new SolidBrush(Color.LightSteelBlue);
             g.FillRectangle(br2, _startPosX + 70, _startPosY + 50, 50, 10);
             g.DrawRectangle(pen, _startPosX + 70, _startPosY + 50, 50, 10);
- 
+
             Point[] points = new Point[6]
             {
                 new Point((int)(_startPosX), (int)(_startPosY + 70)),

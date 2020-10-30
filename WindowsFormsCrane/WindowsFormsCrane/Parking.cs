@@ -38,7 +38,7 @@ namespace WindowsFormsCrane
         /// <param name="p">Стоянка</param>
         /// <param name="crane">Добавляемый кран</param>
         public static bool operator +(Parking<T> p, T crane)
-        {      
+        {
             if (p._places.Count >= p._maxCount)
             {
                 return false;

@@ -28,7 +28,7 @@ namespace WindowsFormsCrane
         // Добавление стоянки
         /// <param name="name">Название стоянки</param>
         public void AddParking(string name)
-        {          
+        {
             if (parkingStages.ContainsKey(name))
             {
                 return;
@@ -58,8 +58,7 @@ namespace WindowsFormsCrane
                 }
                 return null;
             }
-
         }
     }
 }
-    
+

@@ -23,7 +23,7 @@ namespace WindowsFormsCrane
         /// <param name="dopColor">Дополнительный цвет</param>
         /// <param name="arrow">Признак наличия стрелы</param>
         /// <param name="counterweight">Признак наличия противовеса(м)</param>
-        public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight):
+        public HoistingCrane(int maxSpeed, float weight, Color mainColor, Color dopColor, bool arrow, bool counterweight) :
             base(maxSpeed, weight, mainColor, 200, 110)
         {
             DopColor = dopColor;
@@ -40,7 +40,7 @@ namespace WindowsFormsCrane
                 // вправо
                 case Direction.Right:
                     if (Counterweight)
-                    {                   
+                    {
                         if (_startPosX + step < _pictureWidth - (trackedVehicleWidth + _counterweightWidth))
                         {
                             _startPosX += step;
@@ -89,7 +89,7 @@ namespace WindowsFormsCrane
         public override void DrawCrane(Graphics g)
         {
             base.DrawCrane(g);
-            Pen pen = new Pen(Color.Black);       
+            Pen pen = new Pen(Color.Black);
             Brush brD = new SolidBrush(DopColor);
 
             if (Counterweight)
