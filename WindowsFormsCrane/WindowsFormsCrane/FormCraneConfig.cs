@@ -101,7 +101,6 @@ namespace WindowsFormsCrane
         // Проверка получаемой информации (ее типа на соответствие требуемому)
         private void labelMainColor_DragEnter(object sender, DragEventArgs e)
         {
-
             if (e.Data.GetDataPresent(typeof(Color)))
             {
                 e.Effect = DragDropEffects.Copy;
