@@ -150,5 +150,12 @@ namespace WindowsFormsCrane
                 g.DrawLine(pen, _startPosX + 59, _startPosY - 10, _startPosX + 70, _startPosY - 50);
             }
         }
+
+        // Смена дополнительного цвета
+        /// <param name="color"></param>
+        public void SetDopColor(Color color)
+        {
+            DopColor = color;
+        }
     }
 }

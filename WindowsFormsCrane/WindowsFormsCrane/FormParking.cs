@@ -45,50 +45,6 @@ namespace WindowsFormsCrane
             }
         }
 
-        private void buttonSetTrackedVehicle_Click(object sender, EventArgs e)
-        {
-            if (listBoxParkings.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    var crane = new TrackedVehicle(100, 1000, dialog.Color);
-                    if (parkingCollection[listBoxParkings.SelectedItem.ToString()] + crane)
-                    {
-                        Draw();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Стоянка переполнена");
-                    }
-                }
-            }
-        }
-
-        private void buttonSetHoistingCrane_Click(object sender, EventArgs e)
-        {
-            if (listBoxParkings.SelectedIndex > -1)
-            {
-                ColorDialog dialog = new ColorDialog();
-                if (dialog.ShowDialog() == DialogResult.OK)
-                {
-                    ColorDialog dialogDop = new ColorDialog();
-                    if (dialogDop.ShowDialog() == DialogResult.OK)
-                    {
-                        var crane = new HoistingCrane(100, 1000, dialog.Color, dialogDop.Color, true, true);
-                        if (parkingCollection[listBoxParkings.SelectedItem.ToString()] + crane)
-                        {
-                            Draw();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Стоянка переполнена");
-                        }
-                    }
-                }
-            }
-        }
-
         private void buttonTakeCrane_Click(object sender, EventArgs e)
         {
             if (listBoxParkings.SelectedIndex > -1 && maskedTextBoxPlace.Text != "")
@@ -117,6 +73,7 @@ namespace WindowsFormsCrane
             parkingCollection.AddParking(textBoxNewLevelName.Text);
             ReloadLevels();
         }
+
         // Обработка нажатия кнопки "Удалить парковку"
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -135,6 +92,30 @@ namespace WindowsFormsCrane
         private void listBoxParkings_SelectedIndexChanged(object sender, EventArgs e)
         {
             Draw();
+        }
+
+        private void buttonSetCrane_Click(object sender, EventArgs e)
+        {
+            var formCraneConfig = new FormCraneConfig();
+            formCraneConfig.AddEvent(AddCrane);
+            formCraneConfig.Show();
+        }
+
+        // Метод добавления машины
+        /// <param name="crane"></param>
+        private void AddCrane(Platform crane)
+        {
+            if (crane != null && listBoxParkings.SelectedIndex > -1)
+            {
+                if ((parkingCollection[listBoxParkings.SelectedItem.ToString()]) + crane)
+                {
+                    Draw();
+                }
+                else
+                {
+                    MessageBox.Show("Кран не удалось поставить");
+                }
+            }
         }
     }
 }

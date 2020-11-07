@@ -28,5 +28,9 @@ namespace WindowsFormsCrane
             _startPosX = x;
             _startPosY = y;
         }
+        public void SetMainColor(Color color)
+        {
+            MainColor = color;
+        }
     }
 }

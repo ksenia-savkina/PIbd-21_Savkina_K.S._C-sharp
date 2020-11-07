@@ -16,5 +16,8 @@ namespace WindowsFormsCrane
         // Отрисовка
         /// <param name="g"></param>
         void DrawCrane(Graphics g);
+        // Смена основного цвета
+        /// <param name="color"></param>
+        void SetMainColor(Color color);
     }
 }
