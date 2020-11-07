@@ -101,7 +101,7 @@ namespace WindowsFormsCrane
             formCraneConfig.Show();
         }
 
-        // Метод добавления стоянки
+        // Метод добавления крана
         /// <param name="crane"></param>
         private void AddCrane(Platform crane)
         {

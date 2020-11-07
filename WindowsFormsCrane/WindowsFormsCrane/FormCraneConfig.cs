@@ -6,7 +6,6 @@ namespace WindowsFormsCrane
 {
     public partial class FormCraneConfig : Form
     {
-
         // Переменная-выбранный кран
         Platform crane = null;
 
