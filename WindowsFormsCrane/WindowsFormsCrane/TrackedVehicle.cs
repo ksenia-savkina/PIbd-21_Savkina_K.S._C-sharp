@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace WindowsFormsCrane
 {
@@ -10,11 +11,26 @@ namespace WindowsFormsCrane
         protected readonly int trackedVehicleHeight = 110;
         // Высота отрисовки кабины
         protected readonly int _cabinHeight = 20;
+        // Разделитель для записи информации по объекту в файл
+        protected readonly char separator = ';';
         public TrackedVehicle(int maxSpeed, float weight, Color mainColor)
         {
             MaxSpeed = maxSpeed;
             Weight = weight;
             MainColor = mainColor;
+        }
+
+        // Конструктор для загрузки с файла
+        /// <param name="info">Информация по объекту</param>
+        public TrackedVehicle(string info)
+        {
+            string[] strs = info.Split(separator);
+            if (strs.Length == 3)
+            {
+                MaxSpeed = Convert.ToInt32(strs[0]);
+                Weight = Convert.ToInt32(strs[1]);
+                MainColor = Color.FromName(strs[2]);
+            }
         }
 
         protected TrackedVehicle(int maxSpeed, float weight, Color mainColor, int trackedVehicleWidth, int trackedVehicleHeight)
@@ -96,6 +112,11 @@ namespace WindowsFormsCrane
             g.DrawRectangle(pen, _startPosX + 20, _startPosY - 20, 50, 70);
             g.FillRectangle(new SolidBrush(Color.LightBlue), _startPosX + 30, _startPosY - 10, 30, 40);
             g.DrawRectangle(pen, _startPosX + 30, _startPosY - 10, 30, 40);
+        }
+
+        public override string ToString()
+        {
+            return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
         }
     }
 }

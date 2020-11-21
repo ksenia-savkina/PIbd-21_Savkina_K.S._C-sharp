@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace WindowsFormsCrane
@@ -14,6 +15,8 @@ namespace WindowsFormsCrane
         private readonly int pictureWidth;
         // Высота окна отрисовки
         private readonly int pictureHeight;
+        // Разделитель для записи информации в файл
+        private readonly char separator = ':';
 
         // Конструктор
         /// <param name="pictureWidth"></param>
@@ -59,6 +62,98 @@ namespace WindowsFormsCrane
                 return null;
             }
         }
+
+        // Сохранение информации по кранам на стоянках в файл
+        /// <param name="filename">Путь и имя файла</param>
+        public bool SaveData(string filename)
+        {
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+            using (StreamWriter sw = new StreamWriter(filename))
+            {
+                sw.WriteLine($"ParkingCollection");
+                foreach (var level in parkingStages)
+                {
+                    //Начинаем стоянку
+                    sw.WriteLine($"Parking{separator}{level.Key}");
+                    ICrane crane = null;
+                    for (int i = 0; (crane = level.Value.GetNext(i)) != null; i++)
+                    {
+                        if (crane != null)
+                        {
+                            //если место не пустое
+                            //Записываем тип крана
+                            if (crane.GetType().Name == "TrackedVehicle")
+                            {
+                                sw.Write($"TrackedVehicle{separator}");
+                            }
+                            if (crane.GetType().Name == "HoistingCrane")
+                            {
+                                sw.Write($"HoistingCrane{separator}");
+                            }
+                            //Записываемые параметры
+                            sw.WriteLine(crane);
+                        }
+                    }
+                }
+                sw.Close();
+            }
+            return true;
+        }
+
+        // Загрузка нформации по кранам на стоянках из файла
+        public bool LoadData(string filename)
+        {
+            if (!File.Exists(filename))
+            {
+                return false;
+            }
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                string line;
+                string key = string.Empty;
+                if ((line = sr.ReadLine()).Contains("ParkingCollection"))
+                {
+                    //очищаем записи
+                    parkingStages.Clear();
+                    Platform crane = null;
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        if (line.Contains("Parking"))
+                        {
+                            //начинаем новую стоянку
+                            key = line.Split(separator)[1];
+                            parkingStages.Add(key, new Parking<Platform>(pictureWidth, pictureHeight));
+                            continue;
+                        }
+                        if (string.IsNullOrEmpty(line))
+                        {
+                            continue;
+                        }
+                        if (line.Contains("TrackedVehicle"))
+                        {
+                            crane = new TrackedVehicle(line.Split(separator)[1]);
+                        }
+                        else if (line.Contains("HoistingCrane"))
+                        {
+                            crane = new HoistingCrane(line.Split(separator)[1]);
+                        }
+                        var result = parkingStages[key] + crane;
+                        if (!result)
+                        {
+                            return false;
+                        }
+                    }
+                    sr.Close();
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }
+
+
 

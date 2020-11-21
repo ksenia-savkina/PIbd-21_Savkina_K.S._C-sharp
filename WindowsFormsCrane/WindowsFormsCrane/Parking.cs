@@ -33,6 +33,7 @@ namespace WindowsFormsCrane
             pictureHeight = picHeight;
             _places = new List<T>();
         }
+
         // Перегрузка оператора сложения
         // Логика действия: на стоянку добавляется кран
         /// <param name="p">Стоянка</param>
@@ -93,6 +94,16 @@ namespace WindowsFormsCrane
                 }
                 g.DrawLine(pen, i * (_placeSizeWidth + interval), 0, i * (_placeSizeWidth + interval), (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
             }
+        }
+
+        // Функция получения элемента из списка
+        public T GetNext(int index)
+        {
+            if (index < 0 || index >= _places.Count)
+            {
+                return null;
+            }
+            return _places[index];
         }
     }
 }
