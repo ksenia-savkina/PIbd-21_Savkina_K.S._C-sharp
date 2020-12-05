@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,10 +9,13 @@ namespace WindowsFormsCrane
     {
         // Объект от класса-коллекции стоянок
         private readonly ParkingCollection parkingCollection;
+
+        private readonly Logger logger;
         public FormParking()
         {
             InitializeComponent();
             parkingCollection = new ParkingCollection(pictureBoxParking.Width, pictureBoxParking.Height);
+            logger = LogManager.GetCurrentClassLogger();
         }
 
         // Заполнение listBoxLevels
@@ -49,14 +53,28 @@ namespace WindowsFormsCrane
         {
             if (listBoxParkings.SelectedIndex > -1 && maskedTextBoxPlace.Text != "")
             {
-                var crane = parkingCollection[listBoxParkings.SelectedItem.ToString()] - Convert.ToInt32(maskedTextBoxPlace.Text);
-                if (crane != null)
+                try
                 {
-                    FormCrane form = new FormCrane();
-                    form.SetCrane(crane);
-                    form.ShowDialog();
+                    var crane = parkingCollection[listBoxParkings.SelectedItem.ToString()] - Convert.ToInt32(maskedTextBoxPlace.Text);
+                    if (crane != null)
+                    {
+                        FormCrane form = new FormCrane();
+                        form.SetCrane(crane);
+                        form.ShowDialog();
+                        logger.Info($"Изъят кран {crane} с места {maskedTextBoxPlace.Text}");
+                        Draw();
+                    }
                 }
-                Draw();
+                catch (CraneNotFoundException ex)
+                {
+                    logger.Warn("Кран не найден");
+                    MessageBox.Show(ex.Message, "Не найдено", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn("Ошибка");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -67,9 +85,11 @@ namespace WindowsFormsCrane
         {
             if (string.IsNullOrEmpty(textBoxNewLevelName.Text))
             {
+                logger.Warn("Название стоянки не введено");
                 MessageBox.Show("Введите название стоянки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            logger.Info($"Добавили стоянку {textBoxNewLevelName.Text}");
             parkingCollection.AddParking(textBoxNewLevelName.Text);
             ReloadLevels();
         }
@@ -83,6 +103,7 @@ namespace WindowsFormsCrane
             {
                 if (MessageBox.Show($"Удалить стоянку {listBoxParkings.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
+                    logger.Info($"Удалили парковку {listBoxParkings.SelectedItem.ToString()}");
                     parkingCollection.DelParking(textBoxNewLevelName.Text);
                     ReloadLevels();
                 }
@@ -91,6 +112,7 @@ namespace WindowsFormsCrane
 
         private void listBoxParkings_SelectedIndexChanged(object sender, EventArgs e)
         {
+            logger.Info($"Перешли на стоянку {listBoxParkings.SelectedItem.ToString()}");
             Draw();
         }
 
@@ -107,13 +129,29 @@ namespace WindowsFormsCrane
         {
             if (crane != null && listBoxParkings.SelectedIndex > -1)
             {
-                if ((parkingCollection[listBoxParkings.SelectedItem.ToString()]) + crane)
+                try
                 {
+                    if ((parkingCollection[listBoxParkings.SelectedItem.ToString()]) + crane)
+                    {
+                        Draw();
+                        logger.Info($"Добавлен кран {crane}");
+                    }
+                    else
+                    {
+                        logger.Warn("Кран не поставлен");
+                        MessageBox.Show("Кран не удалось поставить");
+                    }
                     Draw();
                 }
-                else
+                catch (ParkingOverflowException ex)
                 {
-                    MessageBox.Show("Кран не удалось поставить");
+                    logger.Warn("Стоянка переполнена");
+                    MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    logger.Warn("Ошибка");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -122,13 +160,16 @@ namespace WindowsFormsCrane
         {
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (parkingCollection.SaveData(saveFileDialog.FileName))
+                try
                 {
+                    parkingCollection.SaveData(saveFileDialog.FileName);
                     MessageBox.Show("Сохранение прошло успешно", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Сохранено в файл " + saveFileDialog.FileName);
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Ошибка при сохранении");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -137,15 +178,18 @@ namespace WindowsFormsCrane
         {
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (parkingCollection.LoadData(openFileDialog.FileName))
+                try
                 {
+                    parkingCollection.LoadData(openFileDialog.FileName);
                     MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    logger.Info("Загружено из файла " + openFileDialog.FileName);
                     ReloadLevels();
                     Draw();
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    logger.Warn("Ошибка при загрузке");
+                    MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

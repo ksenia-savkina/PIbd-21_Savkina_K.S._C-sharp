@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,7 +66,7 @@ namespace WindowsFormsCrane
 
         // Сохранение информации по кранам на стоянках в файл
         /// <param name="filename">Путь и имя файла</param>
-        public bool SaveData(string filename)
+        public void SaveData(string filename)
         {
             if (File.Exists(filename))
             {
@@ -100,15 +101,14 @@ namespace WindowsFormsCrane
                 }
                 sw.Close();
             }
-            return true;
         }
 
         // Загрузка нформации по кранам на стоянках из файла
-        public bool LoadData(string filename)
+        public void LoadData(string filename)
         {
             if (!File.Exists(filename))
             {
-                return false;
+                throw new FileNotFoundException();
             }
             using (StreamReader sr = new StreamReader(filename))
             {
@@ -143,13 +143,15 @@ namespace WindowsFormsCrane
                         var result = parkingStages[key] + crane;
                         if (!result)
                         {
-                            return false;
+                            throw new TypeLoadException();
                         }
                     }
                     sr.Close();
-                    return true;
                 }
-                return false;
+                else
+                {
+                    throw new FormatException();
+                }
             }
         }
     }

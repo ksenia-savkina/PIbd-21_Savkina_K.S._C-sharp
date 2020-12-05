@@ -42,7 +42,7 @@ namespace WindowsFormsCrane
         {
             if (p._places.Count >= p._maxCount)
             {
-                return false;
+                throw new ParkingOverflowException();
             }
             p._places.Add(crane);
             return true;
@@ -54,9 +54,9 @@ namespace WindowsFormsCrane
         /// <param name="index">Индекс места, с которого пытаемся извлечь объект</param>
         public static T operator -(Parking<T> p, int index)
         {
-            if (index < -1 || index > p._places.Count)
+            if (index < -1 || index >= p._places.Count)
             {
-                return null;
+                throw new CraneNotFoundException(index);
             }
             T crane = p._places[index];
             p._places.RemoveAt(index);
