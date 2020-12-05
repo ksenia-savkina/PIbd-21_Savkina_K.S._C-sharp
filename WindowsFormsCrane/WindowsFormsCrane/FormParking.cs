@@ -11,6 +11,7 @@ namespace WindowsFormsCrane
         private readonly ParkingCollection parkingCollection;
 
         private readonly Logger logger;
+
         public FormParking()
         {
             InitializeComponent();
@@ -72,7 +73,7 @@ namespace WindowsFormsCrane
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn("Ошибка");
+                    logger.Warn("Неизвестная ошибка");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -103,7 +104,7 @@ namespace WindowsFormsCrane
             {
                 if (MessageBox.Show($"Удалить стоянку {listBoxParkings.SelectedItem.ToString()}?", "Удаление", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    logger.Info($"Удалили парковку {listBoxParkings.SelectedItem.ToString()}");
+                    logger.Info($"Удалили стоянку {listBoxParkings.SelectedItem.ToString()}");
                     parkingCollection.DelParking(textBoxNewLevelName.Text);
                     ReloadLevels();
                 }
@@ -150,7 +151,7 @@ namespace WindowsFormsCrane
                 }
                 catch (Exception ex)
                 {
-                    logger.Warn("Ошибка");
+                    logger.Warn("Неизвестная ошибка");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
