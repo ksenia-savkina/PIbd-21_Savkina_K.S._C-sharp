@@ -78,7 +78,7 @@ namespace WindowsFormsCrane
                 {
                     //Начинаем стоянку
                     sw.WriteLine($"Parking{separator}{level.Key}");
-                    foreach (ICrane crane in level.Value.Reverse())
+                    foreach (ICrane crane in level.Value)
                     {
                         //Записываем тип крана
                         if (crane.GetType().Name == "TrackedVehicle")
