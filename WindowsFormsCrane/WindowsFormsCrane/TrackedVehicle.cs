@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace WindowsFormsCrane
 {
-    public class TrackedVehicle : Platform
+    public class TrackedVehicle : Platform, IEquatable<TrackedVehicle>
     {
         // Ширина отрисовки гусеничной машины
         protected readonly int trackedVehicleWidth = 200;
@@ -117,6 +117,50 @@ namespace WindowsFormsCrane
         public override string ToString()
         {
             return $"{MaxSpeed}{separator}{Weight}{separator}{MainColor.Name}";
+        }
+
+        // Метод интерфейса IEquatable для класса TrackedVehicle
+        public bool Equals(TrackedVehicle other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (MaxSpeed != other.MaxSpeed)
+            {
+                return false;
+            }
+            if (Weight != other.Weight)
+            {
+                return false;
+            }
+            if (MainColor != other.MainColor)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        // Перегрузка метода от object
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is TrackedVehicle craneObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(craneObj);
+            }
         }
     }
 }

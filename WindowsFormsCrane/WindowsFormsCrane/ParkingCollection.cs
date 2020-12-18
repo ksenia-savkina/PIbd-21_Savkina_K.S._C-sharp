@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -79,24 +78,19 @@ namespace WindowsFormsCrane
                 {
                     //Начинаем стоянку
                     sw.WriteLine($"Parking{separator}{level.Key}");
-                    ICrane crane = null;
-                    for (int i = 0; (crane = level.Value.GetNext(i)) != null; i++)
+                    foreach (ICrane crane in level.Value.Reverse())
                     {
-                        if (crane != null)
+                        //Записываем тип крана
+                        if (crane.GetType().Name == "TrackedVehicle")
                         {
-                            //если место не пустое
-                            //Записываем тип крана
-                            if (crane.GetType().Name == "TrackedVehicle")
-                            {
-                                sw.Write($"TrackedVehicle{separator}");
-                            }
-                            if (crane.GetType().Name == "HoistingCrane")
-                            {
-                                sw.Write($"HoistingCrane{separator}");
-                            }
-                            //Записываемые параметры
-                            sw.WriteLine(crane);
+                            sw.Write($"TrackedVehicle{separator}");
                         }
+                        if (crane.GetType().Name == "HoistingCrane")
+                        {
+                            sw.Write($"HoistingCrane{separator}");
+                        }
+                        //Записываемые параметры
+                        sw.WriteLine(crane);
                     }
                 }
                 sw.Close();
@@ -156,6 +150,3 @@ namespace WindowsFormsCrane
         }
     }
 }
-
-
-

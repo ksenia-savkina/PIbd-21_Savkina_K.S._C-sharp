@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CraneComparer.cs" />
     <Compile Include="CraneNotFoundException.cs" />
     <Compile Include="Direction.cs" />
     <Compile Include="FormCrane.cs">
@@ -77,6 +78,7 @@
     <Compile Include="HoistingCrane.cs" />
     <Compile Include="ICrane.cs" />
     <Compile Include="Parking.cs" />
+    <Compile Include="ParkingAlreadyHaveException.cs" />
     <Compile Include="ParkingCollection.cs" />
     <Compile Include="ParkingOverflowException.cs" />
     <Compile Include="Platform.cs" />

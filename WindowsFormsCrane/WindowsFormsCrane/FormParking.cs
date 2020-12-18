@@ -149,6 +149,10 @@ namespace WindowsFormsCrane
                     logger.Warn("Стоянка переполнена");
                     MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                catch (ParkingAlreadyHaveException ex)
+                {
+                    MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
                 catch (Exception ex)
                 {
                     logger.Warn("Неизвестная ошибка");
@@ -192,6 +196,16 @@ namespace WindowsFormsCrane
                     logger.Warn("Ошибка при загрузке");
                     MessageBox.Show(ex.Message, "Неизвестная ошибка при загрузке", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void buttonSort_Click(object sender, EventArgs e)
+        {
+            if (listBoxParkings.SelectedIndex > -1)
+            {
+                parkingCollection[listBoxParkings.SelectedItem.ToString()].Sort();
+                Draw();
+                logger.Info("Сортировка уровней");
             }
         }
     }

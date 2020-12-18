@@ -2,7 +2,7 @@
 using System.Drawing;
 namespace WindowsFormsCrane
 {
-    public class HoistingCrane : TrackedVehicle
+    public class HoistingCrane : TrackedVehicle, IEquatable<HoistingCrane>
     {
         // Высота отрисовки стрелы
         private readonly int _arrowHeight = 230;
@@ -178,6 +178,62 @@ namespace WindowsFormsCrane
         public override string ToString()
         {
             return $"{base.ToString()}{separator}{DopColor.Name}{separator}{Arrow}{separator}{Counterweight}";
+        }
+
+        // Метод интерфейса IEquatable для класса HoistingCrane
+        public bool Equals(HoistingCrane other)
+        {
+            if (other == null)
+            {
+                return false;
+            }
+            if (GetType().Name != other.GetType().Name)
+            {
+                return false;
+            }
+            if (MaxSpeed != other.MaxSpeed)
+            {
+                return false;
+            }
+            if (Weight != other.Weight)
+            {
+                return false;
+            }
+            if (MainColor != other.MainColor)
+            {
+                return false;
+            }
+            if (DopColor != other.DopColor)
+            {
+                return false;
+            }
+            if (Arrow != other.Arrow)
+            {
+                return false;
+            }
+            if (Counterweight != other.Counterweight)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        // Перегрузка метода от object
+        public override bool Equals(Object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+            if (!(obj is HoistingCrane craneObj))
+            {
+                return false;
+            }
+            else
+            {
+                return Equals(craneObj);
+            }
         }
     }
 }
